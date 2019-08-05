@@ -16,6 +16,8 @@ func main() {
 	sub := router.PathPrefix( "").Subrouter()
 	sub.Methods("GET").Path("/").HandlerFunc(controller.HandleIndex)
 	sub.Methods("POST").Path("/create").HandlerFunc(controller.CreateUsers)
+	sub.Methods("POST").Path("/delete").HandlerFunc(controller.Delete)
+	sub.Methods("POST").Path("/update").HandlerFunc(controller.Update)
 
 	http.Handle("/static/",
 		http.StripPrefix("/static/",

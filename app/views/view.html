@@ -1,40 +1,88 @@
 <html>
 <head>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-        <script>
-            $(function () {
-                $("#user-form").on("submit", function (e) {
-                    e.preventDefault();
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script>
+        $(function () {
+            $("#user-form").on("submit", function (e) {
+                e.preventDefault();
 
-                    var $self = $(this);
-                    var payload = JSON.stringify({
-                        Name : $('[name="Name"]').val(),
-                        Birthday : moment($('[name="Birthday"]').val(),'YYYY-MM-DD'),
-                        Parents : [$('[name="Parents1"]').val(),
-                            $('[name="Parents2"]').val(),]
-                    });
+                var $self = $(this);
+                var payload = JSON.stringify({
+                    Name : $('[name="Name"]').val(),
+                    Birthday : moment($('[name="Birthday"]').val(),'YYYY-MM-DD'),
+                    Parents : [$('[name="Parents1"]').val(),
+                        $('[name="Parents2"]').val(),]
+                });
 
-                    $.ajax({
-                        url: $self.attr("action"),
-                        type: $self.attr("method"),
-                        data: payload,
-                        contentType: 'application/json',
-                    }).then(function (res) {
-                        // $(".message").text("Success Insert Data");
-                        alert("Success");
-                        location.reload();
-                    }).catch(function (a) {
-                        alert("ERROR: " + a.responseText);
-                    });x
+                $.ajax({
+                    url: $self.attr("action"),
+                    type: $self.attr("method"),
+                    data: payload,
+                    contentType: 'application/json',
+                }).then(function (res) {
+                    // $(".message").text("Success Insert Data");
+                    alert("Success");
+                    location.reload();
+                }).catch(function (a) {
+                    alert("ERROR: " + a.responseText);
                 });
             });
+            $("#delete-form").on("submit", function (e) {
+                e.preventDefault();
 
-        </script>
+                var $self = $(this);
+                var payload = JSON.stringify({
+                    ID : $('[name="ID"]').val(),
+                    });
+
+                $.ajax({
+                    url: $self.attr("action"),
+                    type: $self.attr("method"),
+                    data: payload,
+                    contentType: 'application/json',
+                }).then(function (res) {
+                    // $(".message").text("Success Insert Data");
+                    alert("Success");
+                    location.reload();
+                }).catch(function (a) {
+                    alert("ERROR: " + a.responseText);
+                });x
+            });
+
+            $("#update-form").on("submit", function (e) {
+                e.preventDefault();
+
+                var $self = $(this);
+                var payload = JSON.stringify({
+                    ID : $('[name="ID_Update"]').val(),
+                    Name : $('[name="Name_Update"]').val(),
+                    Birthday : moment($('[name="Birthday_Update"]').val(),'YYYY-MM-DD'),
+                    Parents : [$('[name="Parents1_Update"]').val(),
+                        $('[name="Parents2_Update"]').val(),]
+                });
+
+                $.ajax({
+                    url: $self.attr("action"),
+                    type: $self.attr("method"),
+                    data: payload,
+                    contentType: 'application/json',
+                }).then(function (res) {
+                    // $(".message").text("Success Insert Data");
+                    alert("Success");
+                    location.reload();
+                }).catch(function (a) {
+                    alert("ERROR: " + a.responseText);
+                });
+            });
+        });
+
+    </script>
 </head>
 <body>
 
+<h1>INSERT</h1>
 <form id="user-form" method="post" action="/create">
     <input type="text" name="Name" required placeholder="Nama">
     <br> <br>
@@ -46,24 +94,29 @@
     <br> <br>
     <button class="button" >Submit</button>
 </form>
+
 <p class="message"></p>
-
-{{/*<table>*/}}
-{{/*    <tr>*/}}
-{{/*        <th>Name</th>*/}}
-{{/*        <th>Age</th>*/}}
-{{/*        <th>Birthday</th>*/}}
-{{/*        <th>Parent</th>*/}}
-{{/*    </tr>*/}}
-{{/*    <tr>*/}}
-{{/*        <td></td>*/}}
-{{/*        <td></td>*/}}
-{{/*        <td></td>*/}}
-{{/*        <td></td>*/}}
-{{/*    </tr>*/}}
-{{/*</table>*/}}
-
-
+<h1>DELETE</h1>
+<form id="delete-form" method="post" action="/delete">
+    <input type="text" name="ID" required placeholder="ID">
+    <br> <br>
+    <button class="button" >Delete</button>
+</form>
+<h1>UPDATE</h1>
+<form id="update-form" method="post" action="/update">
+    <input type="text" name="ID_Update" required placeholder="ID">
+    <br> <br>
+    <input type="text" name="Name_Update" required placeholder="Nama">
+    <br> <br>
+    <input type="date" name="Birthday_Update" required placeholder="Tanggal Lahir">
+    <br> <br>
+    <input type="text" name="Parents1_Update" required placeholder="Nama Ayah">
+    <br> <br>
+    <input type="text" name="Parents2_Update" required placeholder="Nama Ibu">
+    <br> <br>
+    <button class="button" >Update</button>
+</form>
+<H1>DATA</H1>
 
 </body>
 </html>
